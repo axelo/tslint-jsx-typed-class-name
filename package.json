@@ -1,0 +1,23 @@
+{
+  "name": "tslint-jsx-typed-classnames",
+  "version": "1.0.0",
+  "main": "build",
+  "author": "axelo",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "tsc --project ./"
+  },
+  "dependencies": {
+    "css": "^2.2.1"
+  },
+  "peerDependencies": {
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^9.4.5",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.1"
+  }
+}
