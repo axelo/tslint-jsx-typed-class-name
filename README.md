@@ -1,1 +1,1 @@
-# tslint-jsx-typed-classnames
+# tslint-jsx-typed-class-name

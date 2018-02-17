@@ -4,7 +4,7 @@ import * as Lint from 'tslint';
 export class Rule extends Lint.Rules.AbstractRule {
 
   static metadata: {
-    ruleName: 'jsx-typed-classnames',
+    ruleName: 'jsx-typed-class-name',
     type: 'maintainability',
     description: '',
     optionsDescription: '',
