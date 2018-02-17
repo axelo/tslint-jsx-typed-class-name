@@ -1,1 +1,1 @@
-export * from './jsxTypedClassnamesRule';
+export * from './jsxTypedClassNameRule';
