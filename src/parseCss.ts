@@ -19,7 +19,7 @@ function parseCssFiles(cssFilePaths: ReadonlyArray<string>, cache: Cache): Cache
     return cache;
   }
 
-  let atIimportFilePaths: string[] = [];
+  let atImportFilePaths: string[] = [];
 
   for (let i = 0; i < cssFilePaths.length; ++i) {
     const cssFilePath = cssFilePaths[i];
@@ -29,18 +29,18 @@ function parseCssFiles(cssFilePaths: ReadonlyArray<string>, cache: Cache): Cache
     if (stylesheet.stylesheet && stylesheet.stylesheet.parsingErrors!.length === 0) {
       const rules = stylesheet.stylesheet.rules;
 
-      atIimportFilePaths = atIimportFilePaths.concat(
+      atImportFilePaths = atImportFilePaths.concat(
         parseCssRules(rules, cssFilePath, [], cache)
       );
     }
   }
 
-  return parseCssFiles(atIimportFilePaths, cache);
+  return parseCssFiles(atImportFilePaths, cache);
 }
 
-function parseCssRules(rules: ReadonlyArray<css.Rule>, cssFilePath: string, atIimportFilePaths: string[], cache: Cache): ReadonlyArray<string> {
+function parseCssRules(rules: ReadonlyArray<css.Rule>, cssFilePath: string, atImportFilePaths: string[], cache: Cache): ReadonlyArray<string> {
   if (rules.length === 0) {
-    return atIimportFilePaths;
+    return atImportFilePaths;
   }
 
   cache.filePaths.add(cssFilePath);
@@ -60,12 +60,12 @@ function parseCssRules(rules: ReadonlyArray<css.Rule>, cssFilePath: string, atIi
           const nodeModuleId = importRelativePath.slice(1);
           const importPath = relative.resolve(nodeModuleId);
 
-          atIimportFilePaths.push(importPath);
+          atImportFilePaths.push(importPath);
         } else {
           const cssFileDirname = path.dirname(cssFilePath);
           const importPath = path.resolve(cssFileDirname, importRelativePath);
 
-          atIimportFilePaths.push(importPath);
+          atImportFilePaths.push(importPath);
         }
         break;
 
@@ -92,5 +92,5 @@ function parseCssRules(rules: ReadonlyArray<css.Rule>, cssFilePath: string, atIi
     }
   }
 
-  return parseCssRules(mediaRules, cssFilePath, atIimportFilePaths, cache);
+  return parseCssRules(mediaRules, cssFilePath, atImportFilePaths, cache);
 }
