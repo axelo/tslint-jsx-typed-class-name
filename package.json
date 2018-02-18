@@ -1,15 +1,17 @@
 {
   "name": "tslint-jsx-typed-class-name",
   "version": "1.0.0",
-  "main": "build",
+  "main": "tslint-jsx-typed-class-name.json",
   "author": "axelo",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "tsc --project ./"
+    "build": "tsc --project ./",
+    "copy": "cp -f package.json README.md tslint-jsx-typed-class-name.json build/"
   },
   "dependencies": {
-    "css": "^2.2.1"
+    "css": "^2.2.1",
+    "require-relative": "^0.8.7"
   },
   "peerDependencies": {
     "chokidar": "^2.0.2",
@@ -18,9 +20,15 @@
   },
   "devDependencies": {
     "@types/chokidar": "^1.7.4",
+    "@types/css": "^0.0.31",
     "@types/node": "^8.9.4",
+    "@types/require-relative": "^0.8.0",
     "chokidar": "^2.0.2",
     "tslint": "^5.9.1",
     "typescript": "^2.7.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axelo/tslint-jsx-typed-class-name.git"
   }
 }

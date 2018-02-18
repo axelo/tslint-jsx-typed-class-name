@@ -9,6 +9,10 @@
     "@types/events" "*"
     "@types/node" "*"
 
+"@types/css@^0.0.31":
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/@types/css/-/css-0.0.31.tgz#235cf80e4991a9d769fd640b4b8644b0a4139895"
+
 "@types/events@*":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-1.1.0.tgz#93b1be91f63c184450385272c47b6496fd028e02"
@@ -20,6 +24,10 @@
 "@types/node@^8.9.4":
   version "8.9.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.9.4.tgz#dfd327582a06c114eb6e0441fa3d6fab35edad48"
+
+"@types/require-relative@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@types/require-relative/-/require-relative-0.8.0.tgz#5f2cd190f1dce25da0f6916b935cb897ef60c7cf"
 
 abbrev@1:
   version "1.1.1"
@@ -1140,6 +1148,10 @@ request@2.81.0:
     tough-cookie "~2.3.0"
     tunnel-agent "^0.6.0"
     uuid "^3.0.0"
+
+require-relative@^0.8.7:
+  version "0.8.7"
+  resolved "https://registry.yarnpkg.com/require-relative/-/require-relative-0.8.7.tgz#7999539fc9e047a37928fa196f8e1563dabd36de"
 
 resolve-url@^0.2.1, resolve-url@~0.2.1:
   version "0.2.1"
