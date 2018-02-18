@@ -10,13 +10,9 @@
     "copy": "cp -f package.json README.md tslint-jsx-typed-class-name.json build/"
   },
   "dependencies": {
+    "chokidar": "^2.0.2",
     "css": "^2.2.1",
     "require-relative": "^0.8.7"
-  },
-  "peerDependencies": {
-    "chokidar": "^2.0.2",
-    "tslint": "^5.7.0",
-    "typescript": "^2.7.1"
   },
   "devDependencies": {
     "@types/chokidar": "^1.7.4",
