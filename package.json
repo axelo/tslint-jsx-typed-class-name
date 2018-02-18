@@ -2,7 +2,7 @@
   "name": "tslint-jsx-typed-class-name",
   "version": "1.0.0",
   "main": "tslint-jsx-typed-class-name.json",
-  "author": "axelo",
+  "author": "axol",
   "license": "MIT",
   "private": false,
   "scripts": {
