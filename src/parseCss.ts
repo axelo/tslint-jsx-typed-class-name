@@ -4,17 +4,22 @@ import * as path from 'path';
 import * as relative from 'require-relative';
 
 export interface Cache {
-  classNames: Set<string>;
-  filePaths: Set<string>;
+  readonly classNames: ReadonlySet<string>;
+  readonly filePaths: ReadonlySet<string>;
 }
 
-export function parse(cssFilePaths: ReadonlyArray<string>): Cache {
+interface MutableCache {
+  readonly classNames: Set<string>;
+  readonly filePaths: Set<string>;
+}
+
+export function parse(cssFilePaths: ReadonlyArray<string>) {
   return parseCssFiles(cssFilePaths, { classNames: new Set(), filePaths: new Set() });
 }
 
 const SILENT_PARSER_OPTS: css.ParserOptions = { silent: true };
 
-function parseCssFiles(cssFilePaths: ReadonlyArray<string>, cache: Cache): Cache {
+function parseCssFiles(cssFilePaths: ReadonlyArray<string>, cache: MutableCache): Cache {
   if (cssFilePaths.length === 0) {
     return cache;
   }
@@ -38,7 +43,7 @@ function parseCssFiles(cssFilePaths: ReadonlyArray<string>, cache: Cache): Cache
   return parseCssFiles(atImportFilePaths, cache);
 }
 
-function parseCssRules(rules: ReadonlyArray<css.Rule>, cssFilePath: string, atImportFilePaths: string[], cache: Cache): ReadonlyArray<string> {
+function parseCssRules(rules: ReadonlyArray<css.Rule>, cssFilePath: string, atImportFilePaths: string[], cache: MutableCache): ReadonlyArray<string> {
   if (rules.length === 0) {
     return atImportFilePaths;
   }
