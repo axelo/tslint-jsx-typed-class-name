@@ -1,10 +1,21 @@
 {
   "name": "tslint-jsx-typed-class-name",
   "version": "1.0.0",
+  "description": "TSLint rule that lints all class names found in the jsx attribute `className` against parsed class selectors from a list of css files",
+  "keywords": [
+    "tslint",
+    "tslint-rule",
+    "className",
+    "jsx",
+    "typed"
+  ],
   "main": "tslint-jsx-typed-class-name.json",
   "author": "axol",
   "license": "MIT",
-  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axelo/tslint-jsx-typed-class-name.git"
+  },
   "scripts": {
     "build": "tsc --project ./",
     "copy": "cp -f package.json README.md tslint-jsx-typed-class-name.json build/"
@@ -26,9 +37,5 @@
     "chokidar": "^2.0.2",
     "tslint": "^5.9.1",
     "typescript": "^2.7.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/axelo/tslint-jsx-typed-class-name.git"
   }
 }
