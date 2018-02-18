@@ -1,5 +1,6 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
+import { parse, Cache } from './parseCss';
 
 export class Rule extends Lint.Rules.AbstractRule {
 
@@ -8,49 +9,53 @@ export class Rule extends Lint.Rules.AbstractRule {
     type: 'maintainability',
     description: '',
     optionsDescription: '',
-    options: null,
+    options: {
+      'type': 'array',
+      'items': {
+        'type': 'string'
+      }
+    },
     typescriptOnly: false
   };
 
-  constructor(options: Lint.IOptions) {
-    super({ ...options, ruleSeverity: 'warning' });
-  }
+  static CLASS_NAME_CACHE: Cache | null = null;
 
   public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-    return this.applyWithFunction(sourceFile, walk);
+    const cache = Rule.CLASS_NAME_CACHE =
+      Rule.CLASS_NAME_CACHE || parse(this.ruleArguments.map(String))
+
+    return this.applyWithFunction(sourceFile, walk, cache);
   }
 
 }
 
-const KNOWN_CLASS_NAMES = new Set<string>([
-  'text-blue-dark'
-]);
+interface InitializerStringLiteral {
+  readonly initializer: ts.StringLiteral;
+}
 
-function walk(ctx: Lint.WalkContext<void>) {
+const isJsxAttribute = (node: ts.Node): node is ts.JsxAttribute =>
+  node.kind === ts.SyntaxKind.JsxAttribute;
 
-  const isClassNameJsxAttribute =
-    (attrib: ts.JsxAttribute): attrib is ts.JsxAttribute & { initializer: ts.StringLiteral } =>
-      attrib.initializer
-        ? attrib.initializer.kind === ts.SyntaxKind.StringLiteral && attrib.name.text === 'className'
-        : false;
+const isClassName = (attrib: ts.JsxAttribute): attrib is ts.JsxAttribute & InitializerStringLiteral =>
+  attrib.initializer
+    ? attrib.initializer.kind === ts.SyntaxKind.StringLiteral && attrib.name.text === 'className'
+    : false;
 
-  const checkJsxAttribute = (attrib: ts.JsxAttribute) => {
-    if (!isClassNameJsxAttribute(attrib)) {
-      return;
-    }
+function walk(ctx: Lint.WalkContext<Cache>) {
 
+  const checkClassName = (attrib: ts.JsxAttribute & InitializerStringLiteral) => {
     const classNameText = attrib.initializer.text;
-    const startPos = attrib.getEnd() - classNameText.length - 1;
-
     const classNames = classNameText.split(' ');
     const nbOfClassNames = classNames.length;
+
+    const startPos = attrib.getEnd() - classNameText.length - 1;
 
     for (let i = 0, currentPos = 0; i < nbOfClassNames; ++i) {
       const className = classNames[i];
       const width = className.length;
 
-      if (width && !KNOWN_CLASS_NAMES.has(className)) {
-        ctx.addFailureAt(startPos + currentPos, width, `Unknown class "${className}"`);
+      if (width && !ctx.options.classNames.has(className)) {
+        ctx.addFailureAt(startPos + currentPos, width, `Unknown class '${className}'`);
       }
 
       currentPos += width + 1;
@@ -58,8 +63,8 @@ function walk(ctx: Lint.WalkContext<void>) {
   };
 
   const cb = (node: ts.Node): void => {
-    if (node.kind === ts.SyntaxKind.JsxAttribute) {
-      checkJsxAttribute(node as ts.JsxAttribute);
+    if (isJsxAttribute(node) && isClassName(node)) {
+      checkClassName(node);
     }
 
     return ts.forEachChild(node, cb);

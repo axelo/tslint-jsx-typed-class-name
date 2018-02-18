@@ -1,0 +1,9 @@
+{
+    "rulesDirectory": "./",
+    "rules": {
+        "jsx-typed-class-name": {
+            "severity": "warning",
+            "options": []
+        }
+    }
+}
