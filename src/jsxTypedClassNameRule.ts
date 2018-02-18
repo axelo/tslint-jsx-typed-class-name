@@ -8,8 +8,8 @@ export class Rule extends Lint.Rules.AbstractRule {
   static metadata: {
     ruleName: 'jsx-typed-class-name',
     type: 'maintainability',
-    description: '',
-    optionsDescription: '',
+    description: 'Lints all class names found in jsx attribute className against found class selectors in list of css files.',
+    optionsDescription: 'List of css files to parse for class selectors, @import-rules are followed.',
     options: {
       'type': 'array',
       'items': {
