@@ -1,6 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
 import { parse, Cache } from './parseCss';
+import * as chokidar from 'chokidar';
 
 export class Rule extends Lint.Rules.AbstractRule {
 
@@ -19,12 +20,30 @@ export class Rule extends Lint.Rules.AbstractRule {
   };
 
   static CLASS_NAME_CACHE: Cache | null = null;
+  static FS_WATCHER: chokidar.FSWatcher | null = null;
+
+  static setClassNameCache(cssFilePaths: ReadonlyArray<string>) {
+    Rule.CLASS_NAME_CACHE = parse(cssFilePaths);
+
+    if (!Rule.FS_WATCHER) {
+      Rule.FS_WATCHER = chokidar.watch(Array.from(Rule.CLASS_NAME_CACHE.filePaths), {
+        ignorePermissionErrors: true
+      });
+
+      Rule.FS_WATCHER.on('change', () => {
+        Rule.setClassNameCache(cssFilePaths);
+      });
+    }
+
+    return Rule.CLASS_NAME_CACHE;
+  }
+
+  getCache(): Cache {
+    return Rule.CLASS_NAME_CACHE || Rule.setClassNameCache(this.ruleArguments.map(String));
+  }
 
   public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-    const cache = Rule.CLASS_NAME_CACHE =
-      Rule.CLASS_NAME_CACHE || parse(this.ruleArguments.map(String))
-
-    return this.applyWithFunction(sourceFile, walk, cache);
+    return this.applyWithFunction(sourceFile, walk, this.getCache());
   }
 
 }
@@ -43,6 +62,8 @@ const isClassName = (attrib: ts.JsxAttribute): attrib is ts.JsxAttribute & Initi
 
 function walk(ctx: Lint.WalkContext<Cache>) {
 
+  const validClassNames = ctx.options.classNames;
+
   const checkClassName = (attrib: ts.JsxAttribute & InitializerStringLiteral) => {
     const classNameText = attrib.initializer.text;
     const classNames = classNameText.split(' ');
@@ -54,7 +75,7 @@ function walk(ctx: Lint.WalkContext<Cache>) {
       const className = classNames[i];
       const width = className.length;
 
-      if (width && !ctx.options.classNames.has(className)) {
+      if (width && !validClassNames.has(className)) {
         ctx.addFailureAt(startPos + currentPos, width, `Unknown class '${className}'`);
       }
 
