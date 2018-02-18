@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import * as Lint from 'tslint';
-import { parse, Cache } from './parseCss';
 import * as chokidar from 'chokidar';
+import { parse, Cache } from './parseCss';
 
 export class Rule extends Lint.Rules.AbstractRule {
 
@@ -27,7 +27,8 @@ export class Rule extends Lint.Rules.AbstractRule {
 
     if (!Rule.FS_WATCHER) {
       Rule.FS_WATCHER = chokidar.watch(Array.from(Rule.CLASS_NAME_CACHE.filePaths), {
-        ignorePermissionErrors: true
+        ignorePermissionErrors: true,
+        persistent: false
       });
 
       Rule.FS_WATCHER.on('change', () => {
