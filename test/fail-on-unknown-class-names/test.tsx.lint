@@ -1,0 +1,3 @@
+<div className="non-existent-1 class2 non-existent-2 class1" foo="bar">baz</div>
+                ~~~~~~~~~~~~~~                                                   [Unknown class 'non-existent-1']
+                                      ~~~~~~~~~~~~~~                             [Unknown class 'non-existent-2']

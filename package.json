@@ -18,7 +18,9 @@
   },
   "scripts": {
     "build": "tsc --project ./",
-    "copy": "cp -f package.json README.md tslint-jsx-typed-class-name.json build/"
+    "copy": "cp -f package.json README.md tslint-jsx-typed-class-name.json build/",
+    "clean": "rm -rf build/",
+    "test": "yarn build && tslint -r build/ --test test/**/tslint.json"
   },
   "dependencies": {
     "chokidar": "^2.0.2",
