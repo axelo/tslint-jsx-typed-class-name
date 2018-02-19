@@ -1,6 +1,6 @@
 {
   "name": "tslint-jsx-typed-class-name",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "TSLint rule to provide typed class names for the jsx attribute className. Add more safety to your react components, especially with the css utility library of your choice",
   "keywords": [
     "tslint",
