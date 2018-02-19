@@ -1,7 +1,7 @@
 tslint-jsx-typed-class-name
 ---------------------------
 
-[TSLint](https://github.com/palantir/tslint/) rule that lints all class names found in the jsx attribute `className` against parsed class selectors from a list of css files.
+[TSLint](https://github.com/palantir/tslint/) rule to provide typed class names for the jsx attribute `className`. Add more safety to your react components, especially with the css utility library of your choice. 
 
 ### Installation
 
