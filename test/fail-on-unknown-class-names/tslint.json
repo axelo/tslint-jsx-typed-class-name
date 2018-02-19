@@ -1,7 +1,7 @@
 {
     "rules": {
         "jsx-typed-class-name": {
-            "options": "test/no-unknown-class-names/styles.css"
+            "options": "test/styles.css"
         }
     }
 }
