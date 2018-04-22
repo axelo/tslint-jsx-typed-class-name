@@ -27,7 +27,7 @@ Here's a sample configuration where `tslint.json` lives adjacent to your `node_m
   ],
   "rules": {
     // Configure jsx-typed-class-name here
-    "tslint-jsx-typed-class-name": {
+    "jsx-typed-class-name": {
         "severity": "warning",
         "options": [
             "styles/index.css"
