@@ -15,7 +15,7 @@ or
 
 tslint-jsx-typed-class-name has peer dependencies on [TSLint](https://www.npmjs.com/package/tslint) and [TypeScript](https://www.npmjs.com/package/typescript).
 
-To use this rule, add `"jsx-typed-class-name"` to the `rulesDirectory`.
+To use this rule, add `"tslint-jsx-typed-class-name"` to the `rulesDirectory`.
 
 Here's a sample configuration where `tslint.json` lives adjacent to your `node_modules` folder and with an existing css file `styles/index.css`:
 
@@ -27,7 +27,7 @@ Here's a sample configuration where `tslint.json` lives adjacent to your `node_m
   ],
   "rules": {
     // Configure jsx-typed-class-name here
-    "jsx-typed-class-name": {
+    "tslint-jsx-typed-class-name": {
         "severity": "warning",
         "options": [
             "styles/index.css"

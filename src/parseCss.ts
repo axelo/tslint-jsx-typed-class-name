@@ -14,12 +14,18 @@ interface MutableCache {
 }
 
 export function parse(cssFilePaths: ReadonlyArray<string>) {
-  return parseCssFiles(cssFilePaths, { classNames: new Set(), filePaths: new Set() });
+  return parseCssFiles(cssFilePaths, {
+    classNames: new Set(),
+    filePaths: new Set()
+  });
 }
 
 const SILENT_PARSER_OPTS: css.ParserOptions = { silent: true };
 
-function parseCssFiles(cssFilePaths: ReadonlyArray<string>, cache: MutableCache): Cache {
+function parseCssFiles(
+  cssFilePaths: ReadonlyArray<string>,
+  cache: MutableCache
+): Cache {
   if (cssFilePaths.length === 0) {
     return cache;
   }
@@ -31,7 +37,10 @@ function parseCssFiles(cssFilePaths: ReadonlyArray<string>, cache: MutableCache)
     const cssContent = fs.readFileSync(cssFilePath, 'utf8');
     const stylesheet = css.parse(cssContent, SILENT_PARSER_OPTS);
 
-    if (stylesheet.stylesheet && stylesheet.stylesheet.parsingErrors!.length === 0) {
+    if (
+      stylesheet.stylesheet &&
+      stylesheet.stylesheet.parsingErrors!.length === 0
+    ) {
       const rules = stylesheet.stylesheet.rules;
 
       atImportFilePaths = atImportFilePaths.concat(
@@ -43,7 +52,12 @@ function parseCssFiles(cssFilePaths: ReadonlyArray<string>, cache: MutableCache)
   return parseCssFiles(atImportFilePaths, cache);
 }
 
-function parseCssRules(rules: ReadonlyArray<css.Rule>, cssFilePath: string, atImportFilePaths: string[], cache: MutableCache): ReadonlyArray<string> {
+function parseCssRules(
+  rules: ReadonlyArray<css.Rule>,
+  cssFilePath: string,
+  atImportFilePaths: string[],
+  cache: MutableCache
+): ReadonlyArray<string> {
   if (rules.length === 0) {
     return atImportFilePaths;
   }
@@ -84,16 +98,19 @@ function parseCssRules(rules: ReadonlyArray<css.Rule>, cssFilePath: string, atIm
 
         for (let j = 0; j < selectors.length; ++j) {
           const selector = selectors[j];
-          const classNameRegex = /[.]([\w-]+)/g;
+          const classNameRegex = /[\.]([\/\\:\w-]+)/g;
 
           let match;
 
-          while (match = classNameRegex.exec(selector)) {
-            cache.classNames.add(match[1]);
+          while ((match = classNameRegex.exec(selector))) {
+            cache.classNames.add(
+              match[1]
+                .replace(/([^\\]):.+$/, '$1') // Remove psuedo-classes
+                .replace(/[\\]/g, '') // Remove escape sign);
+            );
           }
         }
         break;
-
     }
   }
 
