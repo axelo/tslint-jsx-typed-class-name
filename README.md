@@ -23,7 +23,7 @@ Here's a sample configuration where `tslint.json` lives adjacent to your `node_m
 {
   "extends": ["tslint:latest"],
   "rulesDirectory": [
-      "jsx-typed-class-name"
+      "tslint-jsx-typed-class-name"
   ],
   "rules": {
     // Configure jsx-typed-class-name here
