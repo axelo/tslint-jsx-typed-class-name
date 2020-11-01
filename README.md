@@ -1,3 +1,7 @@
+# DEPRECATED
+
+I no longer use use or recommend the use of jsx/tsx. There is safer alternatives, for example [Elm](https://elm-lang.org).
+
 tslint-jsx-typed-class-name
 ---------------------------
 
